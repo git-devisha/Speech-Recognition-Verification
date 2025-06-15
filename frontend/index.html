@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Speaker Verification</title>
+</head>
+<body>
+    <h2>Speaker Verification</h2>
+    <form action="/verify" method="post" enctype="multipart/form-data">
+        <label>Audio File 1:</label><br>
+        <input type="file" name="file1" accept="audio/wav"><br><br>
+        <label>Audio File 2:</label><br>
+        <input type="file" name="file2" accept="audio/wav"><br><br>
+        <label>Method:</label>
+        <select name="method">
+            <option value="speechbrain">SpeechBrain</option>
+            <option value="resemble">Resemblyzer</option>
+        </select><br><br>
+        <button type="submit">Verify</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        const form = document.getElementById('upload-form');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch("http://127.0.0.1:8000/verify", {
+                method: "POST",
+                body: formData
+            });
+            const data = await response.json();
+            document.getElementById("result").innerHTML =
+                `<p>Similarity: ${data.similarity.toFixed(4)}</p>
+                 <p>Same Speaker: ${data.same_speaker ? "✅ Yes" : "❌ No"}</p>`;
+        };
+    </script>
+</body>
+</html>
