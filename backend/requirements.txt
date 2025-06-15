@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-multipart
+torch==2.1.0+cpu
+torchaudio==2.1.0+cpu
+resemblyzer==0.1.4
+librosa>=0.9.1
+typing_extensions
+webrtcvad
